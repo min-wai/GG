@@ -14,46 +14,44 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestHolder> {
 
-
-
-    private ArrayTest test = new ArrayTest();
-    private ArrayList<String> haha = test.getMyArrayList();
-
-    TestAdapter() {
-    }
+    private List<String> list = new ArrayList<>();
 
     @NonNull
     @Override
     public TestHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.items,viewGroup,false);
-
-
-        return new TestHolder(view,this);
+        return new TestHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final TestHolder testHolder, int i) {
-        String current = haha.get(i);
+        String current = list.get(i);
         testHolder.mTextView.setText(current);
-
     }
 
     @Override
     public int getItemCount() {
-        return haha.size();
+        return list.size();
     }
 
+    public void setList(List<String> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public String getItemAt(int position) {
+        return list.get(position);
+    }
 
     class TestHolder extends RecyclerView.ViewHolder {
         private TextView mTextView;
-        private TestAdapter mTestAdapter;
 
-        TestHolder(@NonNull View itemView, TestAdapter adapter) {
+        TestHolder(@NonNull View itemView) {
             super(itemView);
-            this.mTestAdapter = adapter;
             mTextView = itemView.findViewById(R.id.mTextView);
         }
     }
